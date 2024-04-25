@@ -1,0 +1,128 @@
+<mapper>
+
+    <!-- 查找帮助分级列表 -->
+    <sql id="sumRewordAmount">
+        SELECT SUM(amount) as airdrop FROM wal_app_activity_reward WHERE uid =#{uid} AND receive = "true" AND side =
+        "REWARD"
+    </sql>
+
+    <!-- 查找领取记录 -->
+    <sql id="getRewordHist">
+        SELECT * FROM wal_app_activity_reward
+        WHERE uid = #{uid} AND receive='true' AND amount>0
+        <if condition="side!='ALL'">
+            AND side = #{side}
+        </if>
+        order by receiveTime desc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+
+    <!-- 统计指定用户指定游戏的战绩 -->
+    <sql id="countRewardByUidAndAid">
+        SELECT SUM(amount) as sum FROM wal_app_activity_reward
+        WHERE uid =#{uid} AND aid = #{aid} AND side='REWARD' AND source='GAME' AND receive ='true'
+    </sql>
+
+    <!-- 统计指定游戏的次数 -->
+    <sql id="countTimeByAid">
+        SELECT COUNT(1) as count FROM wal_app_game_hist WHERE aid = #{aid}
+    </sql>
+
+    <!-- 查找btc开奖记录 -->
+    <sql id="getBtcPriceList">
+        SELECT * FROM wal_app_btc_price
+        WHERE createTime >= #{createTime} AND percentage!=''
+        order by phase desc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <!-- 查找某人游戏参与记录 -->
+    <sql id="findGameHist">
+        SELECT * FROM wal_app_game_hist
+        WHERE uid = #{uid} AND aid = #{aid}
+        order by createTime desc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <!-- 分页查找游戏列表 -->
+    <sql id="findActivityPage">
+        SELECT * FROM wal_app_activity
+        order by `activityOrder` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <!-- 分页查找问题列表 -->
+    <sql id="findQuestionPage">
+        SELECT * FROM wal_app_activity_question
+        order by `createTime` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+    <!--findGameConfigPage分页查找游戏配置列表 -->
+    <sql id="findGameConfigPage">
+        SELECT * FROM wal_app_game_config
+        order by `id` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+    <!--findBehaviorPage分页查找空投配置信息-->
+    <sql id="findBehaviorPage">
+        SELECT * FROM wal_app_behavior_config
+        order by `id` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="findBehaviorByType">
+        SELECT b.* FROM wal_app_behavior_config b,wal_app_activity a
+        WHERE a.id = b.aid AND a.behaviorType = #{type}
+    </sql>
+
+    <sql id="findRewardPage">
+        SELECT r.amount,r.createTime,r.effectiveTime,
+        r.expirationTime,r.id rewardId,r.receive,r.receiveTime,
+        r.side,r.source,r.type,r.unit,c.certNum certCode
+        FROM wal_app_activity_reward r,wal_app_user u LEFT JOIN wal_app_user_cert c ON u.id= c.uid
+        WHERE r.uid = u.id
+
+        <if condition="certCode!=null and ''!=certCode">
+            AND c.certNum  =#{certCode}
+        </if>
+        <if condition="type!=null and ''!=type">
+            AND r.type  =#{type}
+        </if>
+        <if condition="side!=null and ''!=side">
+            AND r.side  =#{side}
+        </if>
+        <if condition="source!=null and ''!=source">
+            AND r.source  =#{source}
+        </if>
+        <if condition="receive!=null and ''!=receive">
+            AND r.receive  =#{receive}
+        </if>
+
+        <if condition="status!=null and ''!=status">
+            <if condition="status==0">
+                AND r.expirationTime  &lt; NOW()
+            </if>
+            <if condition="status==1">
+                AND r.expirationTime  &gt;= NOW()
+            </if>
+        </if>
+
+        order by `createTime` DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+
+    <!--findCreateInOneMonthAll 查找所有dayNum天内注册用户-->
+    <sql id="findCreateInTimeAll">
+        SELECT * FROM wal_app_user where DateDiff(createTime,NOW()) &lt;= #{dayNum} order by `id` asc
+    </sql>
+
+
+
+    <!-- 查找重复用户列表 -->
+    <sql id="findSameUserList">
+        select * from wal_app_user group by uid having sum(1) > 1
+    </sql>
+
+</mapper>

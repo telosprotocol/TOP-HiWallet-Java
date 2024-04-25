@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<artifactId>TOP-HiWallet-Java</artifactId>
+		<groupId>com.topnetwork.wallet</groupId>
+		<version>2.0.0_W</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>TOP-HiWallet-Java-App</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.topnetwork.foundation</groupId>
+			<artifactId>top-foundation-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<artifactId>toptokenviewref</artifactId>
+			<groupId>com.topnetwork.tokenview</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>TOP-HiWallet-Java-Ref</artifactId>
+			<groupId>com.topnetwork.wallet</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-core-common</artifactId>
+			<groupId>org.topnetwork</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-service-logger</artifactId>
+			<groupId>org.topnetwork</groupId>
+			<scope>${profiles.scope}</scope>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-component-aws</artifactId>
+			<groupId>org.topnetwork</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-component-xxljob</artifactId>
+			<groupId>org.topnetwork</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-core-devtools</artifactId>
+			<groupId>org.topnetwork</groupId>
+			<scope>${profiles.scope}</scope>
+		</dependency>
+
+		<dependency>
+			<artifactId>topbase-component-openapi</artifactId>
+			<groupId>org.topnetwork</groupId>
+			<scope>${profiles.scope}</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bitcoinj</groupId>
+			<artifactId>bitcoinj-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+
+		<!--极光推送 -->
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.4.3</version>
+			<!-- <exclusions> <exclusion> <groupId>io.netty</groupId> <artifactId>netty-all</artifactId> 
+				</exclusion> </exclusions> -->
+		</dependency>
+
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jiguang-common</artifactId>
+			<version>1.1.6</version>
+		</dependency>
+		<!--fcm推送 -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.8.1</version>
+		</dependency>
+		<!--ios推送 -->
+		<dependency>
+			<groupId>com.turo</groupId>
+			<artifactId>pushy</artifactId>
+			<version>0.13.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-tcnative-boringssl-static</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.shardingsphere</groupId>
+			<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
+		<!--top SDK -->
+		<dependency>
+			<groupId>org.topj</groupId>
+			<artifactId>topj-core</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.name}</finalName>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources/</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

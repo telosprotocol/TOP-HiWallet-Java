@@ -1,0 +1,40 @@
+<mapper>
+
+    <!-- 查找帮助分级列表 -->
+    <sql id="findHelpList">
+        SELECT
+        h.id ,
+        h.updateTime as updateTime,
+        h.stCategoryId AS stCategoryId,
+        h.ndCategoryId AS ndCategoryId,
+        h.title,h.englishTitle,amu.userName as username
+        FROM
+        wal_appHelp h,sys_user amu
+        WHERE amu.id = h.createId
+        <if condition='category1Id!=null'>
+            AND stCategoryId = #{category1Id}
+        </if>
+        <if condition='category2Id!=null'>
+            AND ndCategoryId = #{category2Id}
+        </if>
+        <if condition='title!=null'>
+            AND title LIKE CONCAT('%',#{title},'%')
+        </if>
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="search">
+        SELECT wah.id,wah.title,wah.englishTitle ,wah.content,wah.englishContent,wah.stCategoryId,wah.ndCategoryId
+        <!--(SELECT `name` FROM wal_appHelpCategory wahc WHERE wah.stCategoryId=wahc.id) as stname_cn,-->
+        <!--(SELECT `englishName` FROM wal_appHelpCategory wahc WHERE wah.stCategoryId=wahc.id) as stname_en,-->
+        <!--(SELECT `name` FROM wal_appHelpCategory wahc WHERE wah.ndCategoryId=wahc.id) as ndname_cn,-->
+        <!--(SELECT `englishName` FROM wal_appHelpCategory wahc WHERE wah.ndCategoryId=wahc.id) as ndname_en-->
+        FROM wal_appHelp wah
+        WHERE wah.title LIKE CONCAT('%',#{key},'%')
+        or wah.content LIKE CONCAT('%',#{key},'%')
+        or wah.englishTitle LIKE CONCAT('%',#{key},'%')
+        or wah.englishContent LIKE CONCAT('%',#{key},'%')
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

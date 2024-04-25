@@ -1,0 +1,11 @@
+<mapper>
+
+    <sql id="findConfigurePage">
+        SELECT *
+        FROM sys_configure
+        order by `id` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+
+</mapper>

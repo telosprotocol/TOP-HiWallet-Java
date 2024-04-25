@@ -1,0 +1,56 @@
+<mapper>
+
+    <sql id="main_name">
+        (1=2
+        <for collection="chainType" item="name">
+            or nickname=#{name}
+        </for>
+        )
+    </sql>
+
+
+    <!-- 币种条件搜索 -->
+    <sql id="findCoinSpeciesByWalletCoinSpecies">
+        SELECT * FROM
+        wal_coin_species
+        where (
+        <include refid="main_name"/>
+        OR fatherId in (SELECT id FROM wal_coin_species WHERE
+        <include refid="main_name"/>
+        ))
+        <if condition="coinName!=null and ''!=coinName">
+            AND (nickname LIKE CONCAT('%',#{coinName},'%') OR contractAddress =#{coinName})
+        </if>
+        <if condition="level!=null and ''!=level">
+            AND level = #{level}
+        </if>
+        <if condition="date!=null and ''!=date">
+            AND createTime >= #{date}
+        </if>
+        <if condition="isHide!=null and ''!=isHide">
+            AND isHide = #{isHide}
+        </if>
+        <if condition="isHot!=null and ''!=isHot">
+            AND isHot = #{isHot}
+        </if>
+        order by tokenOrder,englishName asc limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <!-- 币类型管理 -->
+    <sql id="findCoinSpecies">
+        SELECT * FROM
+        wal_coin_species
+        where 1 = 1
+        <if condition="name!=null and ''!=name">
+            AND (nickname LIKE CONCAT('%',#{name},'%') OR englishName LIKE CONCAT('%',#{name},'%') OR chineseName LIKE CONCAT('%',#{name},'%') )
+        </if>
+        <if condition="isHide!=null and ''!=isHide">
+            AND isHide = #{isHide}
+        </if>
+        <if condition="level!=null and ''!=level">
+            AND level = #{level}
+        </if>
+        order by tokenOrder,englishName asc limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

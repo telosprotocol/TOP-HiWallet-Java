@@ -1,0 +1,25 @@
+<mapper>
+
+    <!-- 用户管理 -->
+    <sql id="get_user_page">
+        SELECT
+        su.id AS userId,
+        su.username AS userName,
+        su. NAME AS NAME,
+        su.mobile AS mobile,
+        su.createTime AS createTime,
+        su. DISABLE AS DISABLE,
+        su.role AS role
+        FROM
+        sys_user su
+        WHERE
+        su.DEL = 'false'
+        <if condition="userName!=null">
+            AND su.username=#{userName}
+        </if>
+        ORDER BY
+        su.id DESC
+        LIMIT #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

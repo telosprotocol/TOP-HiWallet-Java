@@ -1,0 +1,11 @@
+<mapper>
+
+    <sql id="findResourceList">
+        SELECT id,name,url,createTime,region
+        FROM wal_app_resource
+        order by `createTime` asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+
+</mapper>

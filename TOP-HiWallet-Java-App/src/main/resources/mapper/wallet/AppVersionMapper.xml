@@ -1,0 +1,20 @@
+<mapper>
+
+    <!-- 查找版本更新列表 -->
+    <sql id="findAppVersionList">
+        SELECT wav.id,wav.downloadUrl,wav.description,wav.englishDescription,
+                wav.version,wav.region,wav.discover,wav.canUpdate,wav.staking,
+                wav.platform,wav.createTime,wav.createId,wam.userName,
+                wav.title,wav.englishTitle,wav.type,wav.approved
+        FROM
+        wal_appVersion wav,sys_user wam
+        WHERE wav.createId = wam.id
+        <if condition="version!=null and ''!=version">
+            AND wav.version LIKE CONCAT('%',#{version},'%')
+        </if>
+        order by createTime desc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,15 @@
+<mapper>
+
+    <!-- 查询有效用户存币地址列表 -->
+    <sql id="getEffectiveUserDeviceCoinsList">
+      SELECT
+		wdc.*
+	FROM
+		wal_deviceCoins wdc
+		INNER JOIN wal_device wd ON wdc.deviceId = wd.id
+		INNER JOIN wal_app_user wau ON wd.userId = wau.uid 
+		AND wau.`disable` = 'FALSE'
+	WHERE wdc.effectiveAddress='FALSE'
+    </sql>
+
+</mapper>

@@ -1,0 +1,16 @@
+<mapper>
+
+    <!--findBehaviorPage分页查找空投配置信息-->
+    <sql id="getEosNodesForWallet">
+        SELECT nodeName,nodeUrl FROM wal_eos_node WHERE `disable` = 'false'
+        order by nodeOrder asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="getEosNodesForManager">
+        SELECT * FROM wal_eos_node
+        order by nodeOrder asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

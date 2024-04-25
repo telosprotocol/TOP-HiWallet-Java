@@ -1,0 +1,13 @@
+<mapper>
+
+    <!--findBehaviorPage分页查找空投配置信息-->
+
+
+    <sql id="findUserInviteList">
+        SELECT * FROM wal_app_invite
+        WHERE uid=#{uid} AND effective=#{effective}
+        ORDER BY 'createTime',`id` DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

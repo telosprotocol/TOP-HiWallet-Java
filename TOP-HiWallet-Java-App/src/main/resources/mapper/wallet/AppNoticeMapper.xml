@@ -1,0 +1,21 @@
+<mapper>
+
+    <!-- 查找公告列表 -->
+    <sql id="findNoticeList">
+        SELECT
+            wan.id as id,
+            wan.title as title,
+            wan.englishTitle as englishTitle,
+            wan.updateTime as updateTime,
+            wan.createTime as createTime,
+            wam.userName as username
+        FROM
+            wal_appNotice wan,sys_user wam
+        WHERE wan.createId = wam.id
+        <if condition="title!=null and ''!=title">
+            AND wan.title LIKE CONCAT('%',#{title},'%')
+        </if>
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

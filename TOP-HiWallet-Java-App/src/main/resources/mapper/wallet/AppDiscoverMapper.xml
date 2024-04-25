@@ -1,0 +1,74 @@
+<mapper>
+
+    <sql id="findDiscoverGameByClassify">
+        SELECT *
+        FROM wal_app_discover_game
+        WHERE gameShow="true" AND classifyId = #{classifyId}
+        <if condition="approved!=null and approved!=''">
+            <if condition="approved=='1'">AND showType != "examine"</if>
+            <if condition="approved=='0'">AND showType != "normal"</if>
+        </if>
+        order by gameOrder asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="findDiscoverGame">
+        SELECT *
+        FROM wal_app_discover_game
+        order by gameOrder asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="findBannerList">
+        SELECT *
+        FROM wal_app_discover_banner
+        order by bannerOrder asc
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="findGroupPage">
+        SELECT *
+        FROM wal_app_discover_group
+        <if condition="language!=null and language!=''">
+          WHERE language=#{language}
+        </if>
+        order by groupOrder DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="findLabelPage">
+        SELECT *
+        FROM wal_app_discover_label
+        <if condition="labelType!=null and labelType!=''">
+            WHERE labelType=#{labelType}
+        </if>
+        order by `id` DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="getBannerList">
+        SELECT *
+        FROM wal_app_discover_banner_new
+        order by `id` DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+    <sql id="getAppList">
+        SELECT * FROM
+        <if condition="appType!=null and appType=='PRO'">
+            wal_app_discover_pro
+        </if>
+        <if condition="appType!=null and appType=='APP'">
+            wal_app_discover_app
+        </if>
+        <if condition="appType!=null and appType=='HTML'">
+            wal_app_discover_html
+        </if>
+        <if condition="appType!=null and appType=='DAPP'">
+            wal_app_discover_dapp
+        </if>
+        order by `id` DESC
+        limit #{pageIndex},#{pageSize}
+    </sql>
+
+</mapper>

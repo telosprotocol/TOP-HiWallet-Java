@@ -1,0 +1,20 @@
+<mapper>
+
+    <!-- 获取用户对应的权限对象 -->
+    <sql id="getPermissionWithUserId">
+        SELECT
+        sp.id as permissionId,
+        sp.name as name,
+        sp.url as url,
+        sp.module as module
+        FROM
+        sys_user su
+        INNER JOIN sys_user_permission sup ON sup.userId = su.id
+        INNER JOIN sys_permission sp ON sp.id = sup.permissionId
+        WHERE
+        su.id = #{userId}
+        AND sp.disable = 'false'
+        ORDER BY sp.sort ASC
+    </sql>
+
+</mapper>
